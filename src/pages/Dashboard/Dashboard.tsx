@@ -1,3 +1,9 @@
+import { FeaturedNewsCarousel } from "../../components/UI/FeaturedNewsCarousel/FeaturedNewsCarousel";
+
 export const Dashboard = () => {
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <FeaturedNewsCarousel />
+    </div>
+  );
 };
