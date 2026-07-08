@@ -41,7 +41,7 @@ export const Sidebar = () => {
 
   return (
     <aside
-      className="w-65 bg-white border-r border-slate-200 flex flex-col h-full 
+      className="w-50 bg-white border-r border-slate-200 flex flex-col h-full 
       z-20 shadow-sm"
     >
       <div className="h-20 flex items-center px-6 border-b border-slate-100">
