@@ -59,7 +59,7 @@ export const FeaturedNewsCarousel = () => {
   const currentNews = mockNews[currentIndex];
 
   return (
-    <div className="relative w-full h-95 rounded-2xl overflow-hidden group shadow-sm bg-blue-900">
+    <div className="relative w-full h-80 rounded-2xl overflow-hidden group shadow-sm bg-blue-900">
       <img
         key={currentNews.id}
         src={currentNews.imageUrl}
