@@ -79,24 +79,18 @@ export const DepartmentNews = () => {
           <Link
             key={news.id}
             to="/noticias/departamentos"
-            className="group flex gap-4 rounded-2xl border border-transparent p-3 transition hover:border-blue-100 hover:bg-blue-50/50"
+            className="group grid min-h-[86px] grid-cols-[48px_minmax(0,1fr)_auto] items-center gap-4 rounded-2xl border border-transparent p-3 transition hover:border-blue-100 hover:bg-blue-50/50"
           >
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-[#0033a0] transition group-hover:scale-105 group-hover:bg-[#0033a0] group-hover:text-white">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-[#0033a0] transition group-hover:scale-105 group-hover:bg-[#0033a0] group-hover:text-white">
               <news.icon className="h-6 w-6" strokeWidth={1.7} />
             </div>
 
-            <div className="min-w-0 flex-1">
-              <div className="mb-1 flex items-center justify-between gap-3">
-                <span className="text-sm font-bold text-blue-600">
-                  {news.department}
-                </span>
+            <div className="min-w-0">
+              <span className="text-sm font-bold text-blue-600">
+                {news.department}
+              </span>
 
-                <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-500 group-hover:bg-white">
-                  {news.timeAgo}
-                </span>
-              </div>
-
-              <h4 className="truncate text-sm font-bold text-slate-800 transition-colors group-hover:text-[#0033a0]">
+              <h4 className="mt-0.5 truncate text-sm font-bold text-slate-800 transition-colors group-hover:text-[#0033a0]">
                 {news.title}
               </h4>
 
@@ -104,6 +98,10 @@ export const DepartmentNews = () => {
                 {news.description}
               </p>
             </div>
+
+            <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-500 transition group-hover:bg-white">
+              {news.timeAgo}
+            </span>
           </Link>
         ))}
       </div>
