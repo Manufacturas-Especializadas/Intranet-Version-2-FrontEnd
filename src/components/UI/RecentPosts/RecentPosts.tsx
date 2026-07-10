@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ThumbsUp, MessageSquare, Plus, User } from "lucide-react";
+import { ThumbsUp, MessageSquare, Plus, User, ArrowRight } from "lucide-react";
 
 interface PostItem {
   id: string;
@@ -45,10 +45,11 @@ export const RecentPosts = () => {
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-bold text-[#0033a0]">Posteos recientes</h3>
         <Link
-          to="/posteos"
-          className="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+          to="/posts"
+          className="group flex shrink-0 items-center gap-1 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-800"
         >
           Ver todos
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
         </Link>
       </div>
 
@@ -56,9 +57,8 @@ export const RecentPosts = () => {
         {recentPosts.map((post, index) => (
           <div
             key={post.id}
-            className={`flex gap-4 items-start py-4 ${
-              index !== 0 ? "border-t border-slate-100" : "pt-0"
-            }`}
+            className={`flex gap-4 items-start py-4 ${index !== 0 ? "border-t border-slate-100" : "pt-0"
+              }`}
           >
             <div
               className="shrink-0 w-10 h-10 bg-slate-200 text-slate-400 rounded-full flex 
