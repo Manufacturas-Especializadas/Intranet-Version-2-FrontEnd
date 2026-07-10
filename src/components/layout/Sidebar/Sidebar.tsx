@@ -10,7 +10,6 @@ import {
   Newspaper,
   User,
   Users,
-  Zap,
 } from "lucide-react";
 
 interface MenuItem {

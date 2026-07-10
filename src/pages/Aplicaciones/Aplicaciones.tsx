@@ -1,9 +1,6 @@
 import {
     ExternalLink,
-    LayoutGrid,
     LockKeyhole,
-    ShieldCheck,
-    Sparkles,
 } from "lucide-react";
 import {
     companyApplications,
