@@ -29,6 +29,11 @@ const menuItems: MenuItem[] = [
     icon: Home,
   },
   {
+    title: "Aplicaciones",
+    path: "/aplicaciones",
+    icon: LayoutGrid,
+  },
+  {
     title: "Noticias",
     path: "/noticias",
     icon: Newspaper,
@@ -37,11 +42,6 @@ const menuItems: MenuItem[] = [
     title: "Mi Departamento",
     path: "/departamento",
     icon: Users,
-  },
-  {
-    title: "Aplicaciones",
-    path: "/aplicaciones",
-    icon: LayoutGrid,
   },
   {
     title: "Capacitaciones",
@@ -132,20 +132,20 @@ export const Sidebar = () => {
         "
       />
 
-{/* Área del logo */}
-<div
-  className="
+      {/* Área del logo */}
+      <div
+        className="
     relative z-10
     flex min-h-[142px]
     items-center justify-center
     border-b border-blue-100/80
     px-4 py-5
   "
->
-  <Link
-    to="/"
-    aria-label="Ir al inicio"
-    className="
+      >
+        <Link
+          to="/"
+          aria-label="Ir al inicio"
+          className="
       group/logo relative
       flex cursor-pointer
       items-center justify-center
@@ -154,11 +154,11 @@ export const Sidebar = () => {
       focus-visible:ring-blue-500
       focus-visible:ring-offset-2
     "
-  >
-    {/* Resplandor detrás del logo */}
-    <div
-      aria-hidden="true"
-      className="
+        >
+          {/* Resplandor detrás del logo */}
+          <div
+            aria-hidden="true"
+            className="
         absolute
         h-24 w-24
         rounded-full
@@ -168,50 +168,50 @@ export const Sidebar = () => {
         group-hover/logo:scale-125
         group-hover/logo:bg-blue-400/35
       "
-    />
+          />
 
-    {/* Globo con meridianos detrás del logo */}
-    <div
-      aria-hidden="true"
-      className="
+          {/* Globo con meridianos detrás del logo */}
+          <div
+            aria-hidden="true"
+            className="
         pointer-events-none absolute
         flex h-[122px] w-[122px] items-center justify-center
         opacity-90
         transition-transform duration-700
         group-hover/logo:scale-105
       "
-    >
-      <div
-        className="
+          >
+            <div
+              className="
           relative h-full w-full
           animate-[spin_28s_linear_infinite]
         "
-      >
-        {/* Círculo exterior */}
-        <div
-          className="
+            >
+              {/* Círculo exterior */}
+              <div
+                className="
             absolute inset-0 rounded-full
             border border-blue-200/70
             shadow-[0_0_18px_rgba(22,133,223,0.08)]
             transition-colors duration-500
             group-hover/logo:border-blue-400/75
           "
-        />
+              />
 
-        {/* Meridiano central */}
-        <div
-          className="
+              {/* Meridiano central */}
+              <div
+                className="
             absolute left-1/2 top-0 h-full w-px
             -translate-x-1/2
             bg-blue-200/65
             transition-colors duration-500
             group-hover/logo:bg-blue-300/80
           "
-        />
+              />
 
-        {/* Meridianos laterales */}
-        <div
-          className="
+              {/* Meridianos laterales */}
+              <div
+                className="
             absolute left-1/2 top-0 h-full w-[72%]
             -translate-x-1/2
             scale-x-[0.42]
@@ -220,10 +220,10 @@ export const Sidebar = () => {
             transition-colors duration-500
             group-hover/logo:border-blue-300/75
           "
-        />
+              />
 
-        <div
-          className="
+              <div
+                className="
             absolute left-1/2 top-0 h-full w-[72%]
             -translate-x-1/2
             scale-x-[0.72]
@@ -232,22 +232,22 @@ export const Sidebar = () => {
             transition-colors duration-500
             group-hover/logo:border-blue-300/65
           "
-        />
+              />
 
-        {/* Ecuador */}
-        <div
-          className="
+              {/* Ecuador */}
+              <div
+                className="
             absolute left-0 top-1/2 h-px w-full
             -translate-y-1/2
             bg-blue-200/65
             transition-colors duration-500
             group-hover/logo:bg-blue-300/80
           "
-        />
+              />
 
-        {/* Paralelos */}
-        <div
-          className="
+              {/* Paralelos */}
+              <div
+                className="
             absolute left-1/2 top-1/2 h-[68%] w-full
             -translate-x-1/2 -translate-y-1/2
             scale-y-[0.42]
@@ -256,10 +256,10 @@ export const Sidebar = () => {
             transition-colors duration-500
             group-hover/logo:border-blue-300/75
           "
-        />
+              />
 
-        <div
-          className="
+              <div
+                className="
             absolute left-1/2 top-1/2 h-[68%] w-full
             -translate-x-1/2 -translate-y-1/2
             scale-y-[0.72]
@@ -268,23 +268,23 @@ export const Sidebar = () => {
             transition-colors duration-500
             group-hover/logo:border-blue-300/65
           "
-        />
-      </div>
-    </div>
+              />
+            </div>
+          </div>
 
-    {/* Logo sin fondo rectangular */}
-    <div
-      className="
+          {/* Logo sin fondo rectangular */}
+          <div
+            className="
         relative flex
         h-[92px] w-[126px]
         items-center justify-center
       "
-    >
-      <img
-        src={Logo}
-        alt="MESA"
-        draggable={false}
-        className="
+          >
+            <img
+              src={Logo}
+              alt="MESA"
+              draggable={false}
+              className="
           relative z-10
           h-[80px] w-auto
           object-contain
@@ -294,10 +294,10 @@ export const Sidebar = () => {
           group-hover/logo:scale-110
           group-hover/logo:drop-shadow-[0_15px_22px_rgba(0,51,160,0.32)]
         "
-      />
-    </div>
-  </Link>
-</div>
+            />
+          </div>
+        </Link>
+      </div>
 
 
       {/* Navegación */}
@@ -332,9 +332,8 @@ export const Sidebar = () => {
                 focus-visible:ring-2
                 focus-visible:ring-blue-500
                 focus-visible:ring-offset-1
-                ${
-                  active
-                    ? `
+                ${active
+                  ? `
                       bg-gradient-to-r
                       from-[#0033a0]
                       via-[#0757bb]
@@ -342,7 +341,7 @@ export const Sidebar = () => {
                       text-white
                       shadow-[0_10px_24px_rgba(0,51,160,0.22)]
                     `
-                    : `
+                  : `
                       text-slate-600
                       hover:translate-x-1
                       hover:bg-blue-50/80
@@ -373,10 +372,9 @@ export const Sidebar = () => {
                   absolute bottom-2 left-0 top-2
                   w-1 rounded-r-full
                   transition-all duration-300
-                  ${
-                    active
-                      ? "bg-cyan-300 opacity-100 shadow-[0_0_12px_rgba(103,232,249,0.8)]"
-                      : "bg-blue-500 opacity-0 group-hover/menu:opacity-100"
+                  ${active
+                    ? "bg-cyan-300 opacity-100 shadow-[0_0_12px_rgba(103,232,249,0.8)]"
+                    : "bg-blue-500 opacity-0 group-hover/menu:opacity-100"
                   }
                 `}
               />
@@ -389,10 +387,9 @@ export const Sidebar = () => {
                   items-center justify-center
                   rounded-xl
                   transition-all duration-300
-                  ${
-                    active
-                      ? "bg-white/15 text-white shadow-inner"
-                      : `
+                  ${active
+                    ? "bg-white/15 text-white shadow-inner"
+                    : `
                         bg-slate-50 text-slate-400
                         group-hover/menu:rotate-[-3deg]
                         group-hover/menu:scale-110
@@ -497,27 +494,6 @@ export const Sidebar = () => {
               "
             >
               <HeadphonesIcon className="h-5 w-5" />
-
-              <span
-                className="
-                  absolute -right-1 -top-1
-                  h-3 w-3
-                  rounded-full
-                  border-2 border-white
-                  bg-emerald-500
-                "
-              />
-
-              <span
-                aria-hidden="true"
-                className="
-                  absolute -right-1 -top-1
-                  h-3 w-3
-                  animate-ping
-                  rounded-full
-                  bg-emerald-400/70
-                "
-              />
             </div>
 
             <div className="min-w-0">
@@ -526,7 +502,7 @@ export const Sidebar = () => {
               </p>
 
               <p className="mt-0.5 text-[11px] text-slate-500">
-                
+
               </p>
             </div>
           </div>

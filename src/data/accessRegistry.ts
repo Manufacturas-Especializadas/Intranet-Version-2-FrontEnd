@@ -78,39 +78,6 @@ export const companyApplications: CompanyApplication[] = [
         iconBackground: "bg-gradient-to-br from-amber-400 to-amber-600",
     },
     {
-        id: "app-embarques",
-        title: "Inventarios - Embarques",
-        shortTitle: "Embarques",
-        description:
-            "Consulta y captura de inventarios correspondientes al área de embarques.",
-        category: "Inventarios",
-        icon: Truck,
-        path: "https://jolly-hill-0f9d26110.7.azurestaticapps.net/EMBARQUES",
-        iconBackground: "bg-gradient-to-br from-sky-400 to-sky-600",
-    },
-    {
-        id: "app-entradas",
-        title: "Entradas Microchannel",
-        shortTitle: "Entradas",
-        description:
-            "Registro y consulta de entradas de inventario para Microchannel.",
-        category: "Inventarios",
-        icon: ArrowDownToLine,
-        path: "https://jolly-hill-0f9d26110.7.azurestaticapps.net/entradas-microchannel",
-        iconBackground: "bg-gradient-to-br from-emerald-400 to-emerald-600",
-    },
-    {
-        id: "app-salidas",
-        title: "Salidas Microchannel",
-        shortTitle: "Salidas",
-        description:
-            "Registro y consulta de salidas de inventario para Microchannel.",
-        category: "Inventarios",
-        icon: ArrowUpFromLine,
-        path: "https://jolly-hill-0f9d26110.7.azurestaticapps.net/salidas-microchannel",
-        iconBackground: "bg-gradient-to-br from-rose-400 to-rose-600",
-    },
-    {
         id: "app-masterweb",
         title: "MasterWeb",
         shortTitle: "MasterWeb",
@@ -124,8 +91,8 @@ export const companyApplications: CompanyApplication[] = [
     },
     {
         id: "app-mejora",
-        title: "Mejora Continua",
-        shortTitle: "Mejora Continua",
+        title: "DaMESAidea - Mejora Continua",
+        shortTitle: "DaMESAidea - Mejora Continua",
         description:
             "Registro y seguimiento de actividades relacionadas con mejora continua.",
         category: "Calidad",
@@ -145,17 +112,6 @@ export const companyApplications: CompanyApplication[] = [
         iconBackground: "bg-gradient-to-br from-blue-500 to-blue-700",
     },
     {
-        id: "app-qmp",
-        title: "QMP",
-        shortTitle: "QMP",
-        description:
-            "Plataforma para la administración de procesos y gestión de calidad.",
-        category: "Calidad",
-        icon: ClipboardCheck,
-        path: "https://black-pond-0bd9df710.1.azurestaticapps.net/",
-        iconBackground: "bg-gradient-to-br from-teal-400 to-teal-600",
-    },
-    {
         id: "app-tickets",
         title: "Tickets Sistemas",
         shortTitle: "Tickets",
@@ -165,29 +121,6 @@ export const companyApplications: CompanyApplication[] = [
         icon: TicketCheck,
         path: "https://orange-sea-091f38210.7.azurestaticapps.net/",
         iconBackground: "bg-gradient-to-br from-violet-400 to-violet-600",
-    },
-    {
-        id: "app-carrier",
-        title: "Portal Carrier",
-        shortTitle: "Carrier",
-        description:
-            "Acceso al portal externo de proveedores y servicios de Carrier.",
-        category: "Proveedores",
-        icon: Handshake,
-        path: "https://supplierportal.carrier.com.mx/Site/Home",
-        iconBackground: "bg-gradient-to-br from-cyan-400 to-cyan-600",
-    },
-    {
-        id: "app-etiquetas",
-        title: "Etiquetas Trane",
-        shortTitle: "Etiquetas Trane",
-        description:
-            "Generación y consulta de reportes para etiquetas de partes Trane.",
-        category: "Operaciones",
-        icon: Barcode,
-        path: "http://mestaesql01/Reports/report/MesaReports/Etiquetas_Trane_Partes",
-        iconBackground: "bg-gradient-to-br from-slate-500 to-slate-700",
-        internal: true,
     },
 ];
 
@@ -238,7 +171,7 @@ const internalQuickAccessItems: QuickAccessItem[] = [
         id: "cumpleanos",
         title: "Cumpleaños",
         icon: Gift,
-        path: "/cumpleanos",
+        path: "/#cumpleanos",
     },
     {
         id: "ingresos",
