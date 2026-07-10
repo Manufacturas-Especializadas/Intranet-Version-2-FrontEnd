@@ -1,5 +1,6 @@
 import { CalendarDays, Expand, Maximize2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DocumentViewerModal } from "../DocumentViewerModal/DocumentViewerModal";
 
 const CALENDAR_IMAGE = "/calendario-2026.png";
@@ -7,12 +8,65 @@ const CALENDAR_IMAGE = "/calendario-2026.png";
 export const CalendarWidget = () => {
   const [open, setOpen] = useState(false);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const calendarRef = useRef<HTMLElement | null>(null);
+
+  /*
+   * Cuando la dirección sea /#calendario:
+   *
+   * 1. El Dashboard se carga.
+   * 2. La página baja hasta este componente.
+   * 3. Después se abre automáticamente el modal.
+   */
+  useEffect(() => {
+    if (location.hash !== "#calendario") return;
+
+    const scrollTimer = window.setTimeout(() => {
+      calendarRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 150);
+
+    const openTimer = window.setTimeout(() => {
+      setOpen(true);
+    }, 750);
+
+    return () => {
+      window.clearTimeout(scrollTimer);
+      window.clearTimeout(openTimer);
+    };
+  }, [location.hash]);
+
+  const openCalendar = () => {
+    setOpen(true);
+  };
+
+  const closeCalendar = () => {
+    setOpen(false);
+
+    /*
+     * Si el modal se abrió desde /#calendario,
+     * eliminamos el hash sin recargar ni mover la página.
+     */
+    if (location.hash === "#calendario") {
+      navigate("/", {
+        replace: true,
+        preventScrollReset: true,
+      });
+    }
+  };
+
   return (
     <>
       <section
+        ref={calendarRef}
+        id="calendario"
         aria-labelledby="calendar-widget-title"
         className="
-          group/widget relative overflow-hidden
+          group/widget relative scroll-mt-28 overflow-hidden
           rounded-[26px]
           border border-blue-100
           bg-white
@@ -66,7 +120,10 @@ export const CalendarWidget = () => {
                   group-hover/widget:scale-105
                 "
               >
-                <CalendarDays className="h-5 w-5" strokeWidth={2.2} />
+                <CalendarDays
+                  className="h-5 w-5"
+                  strokeWidth={2.2}
+                />
               </div>
 
               <div className="min-w-0">
@@ -91,11 +148,12 @@ export const CalendarWidget = () => {
 
             <button
               type="button"
-              onClick={() => setOpen(true)}
+              onClick={openCalendar}
               aria-label="Ampliar calendario MESA 2026"
               title="Ampliar calendario"
               className="
-                flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center
+                flex h-10 w-10 shrink-0 cursor-pointer
+                items-center justify-center
                 rounded-xl
                 border border-slate-200
                 bg-white
@@ -112,23 +170,26 @@ export const CalendarWidget = () => {
                 focus-visible:ring-offset-2
               "
             >
-              <Expand className="h-[18px] w-[18px]" strokeWidth={2} />
+              <Expand
+                className="h-[18px] w-[18px]"
+                strokeWidth={2}
+              />
             </button>
           </header>
 
           {/* Vista previa */}
           <button
             type="button"
-            onClick={() => setOpen(true)}
+            onClick={openCalendar}
             aria-label="Abrir calendario completo"
             className="
               group/calendar relative block w-full
+              cursor-pointer
               overflow-hidden
               rounded-[21px]
               border border-slate-200/80
               bg-slate-50
               p-2
-              cursor-pointer
               shadow-[0_8px_24px_rgba(15,23,42,0.08)]
               transition-all duration-500
               hover:-translate-y-1
@@ -155,6 +216,7 @@ export const CalendarWidget = () => {
 
               {/* Capa oscura inferior */}
               <div
+                aria-hidden="true"
                 className="
                   pointer-events-none absolute inset-0
                   bg-gradient-to-t
@@ -183,7 +245,7 @@ export const CalendarWidget = () => {
                 "
               />
 
-              {/* Botón flotante */}
+              {/* Indicador flotante */}
               <div
                 className="
                   pointer-events-none absolute
@@ -204,7 +266,11 @@ export const CalendarWidget = () => {
                   group-hover/calendar:opacity-100
                 "
               >
-                <Maximize2 className="h-3.5 w-3.5" strokeWidth={2} />
+                <Maximize2
+                  className="h-3.5 w-3.5"
+                  strokeWidth={2}
+                />
+
                 Ver calendario completo
               </div>
             </div>
@@ -216,7 +282,7 @@ export const CalendarWidget = () => {
         isOpen={open}
         title="Calendario MESA 2026"
         image={CALENDAR_IMAGE}
-        onClose={() => setOpen(false)}
+        onClose={closeCalendar}
       />
     </>
   );

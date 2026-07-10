@@ -4,7 +4,8 @@ import {
   Maximize2,
   UsersRound,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DocumentViewerModal } from "../DocumentViewerModal/DocumentViewerModal";
 
 const DIRECTORY_IMAGE = "/directorio-2026.png";
@@ -12,16 +13,66 @@ const DIRECTORY_IMAGE = "/directorio-2026.png";
 export const DirectoryWidget = () => {
   const [open, setOpen] = useState(false);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const directoryRef = useRef<HTMLElement | null>(null);
+
+  /*
+   * Cuando la dirección sea /#directorio:
+   *
+   * 1. Se carga la página principal.
+   * 2. Se hace scroll hasta este componente.
+   * 3. Se abre automáticamente el modal.
+   */
+  useEffect(() => {
+    if (location.hash !== "#directorio") return;
+
+    const scrollTimer = window.setTimeout(() => {
+      directoryRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 150);
+
+    const openTimer = window.setTimeout(() => {
+      setOpen(true);
+    }, 750);
+
+    return () => {
+      window.clearTimeout(scrollTimer);
+      window.clearTimeout(openTimer);
+    };
+  }, [location.hash]);
+
   const openDirectory = () => {
     setOpen(true);
+  };
+
+  const closeDirectory = () => {
+    setOpen(false);
+
+    /*
+     * Si se abrió desde /#directorio,
+     * elimina el hash sin recargar la página
+     * y sin regresar la vista al inicio.
+     */
+    if (location.hash === "#directorio") {
+      navigate("/", {
+        replace: true,
+        preventScrollReset: true,
+      });
+    }
   };
 
   return (
     <>
       <section
+        ref={directoryRef}
+        id="directorio"
         aria-labelledby="directory-widget-title"
         className="
-          group/widget relative overflow-hidden
+          group/widget relative scroll-mt-28 overflow-hidden
           rounded-[26px]
           border border-blue-100
           bg-white
@@ -41,7 +92,7 @@ export const DirectoryWidget = () => {
           "
         />
 
-        {/* Círculos decorativos */}
+        {/* Círculo decorativo exterior */}
         <div
           aria-hidden="true"
           className="
@@ -51,6 +102,7 @@ export const DirectoryWidget = () => {
           "
         />
 
+        {/* Círculo decorativo interior */}
         <div
           aria-hidden="true"
           className="
@@ -79,7 +131,8 @@ export const DirectoryWidget = () => {
             <div className="flex min-w-0 items-center gap-3">
               <div
                 className="
-                  flex h-11 w-11 shrink-0 items-center justify-center
+                  flex h-11 w-11 shrink-0
+                  items-center justify-center
                   rounded-2xl
                   bg-[#0033a0]
                   text-white
@@ -89,7 +142,10 @@ export const DirectoryWidget = () => {
                   group-hover/widget:scale-105
                 "
               >
-                <BookUser className="h-5 w-5" strokeWidth={2.2} />
+                <BookUser
+                  className="h-5 w-5"
+                  strokeWidth={2.2}
+                />
               </div>
 
               <div className="min-w-0">
@@ -119,13 +175,15 @@ export const DirectoryWidget = () => {
               </div>
             </div>
 
+            {/* Botón superior */}
             <button
               type="button"
               onClick={openDirectory}
               aria-label="Ampliar directorio MESA"
               title="Ampliar directorio"
               className="
-                flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center
+                flex h-10 w-10 shrink-0 cursor-pointer
+                items-center justify-center
                 rounded-xl
                 border border-slate-200
                 bg-white
@@ -142,7 +200,10 @@ export const DirectoryWidget = () => {
                 focus-visible:ring-offset-2
               "
             >
-              <Expand className="h-[18px] w-[18px]" strokeWidth={2} />
+              <Expand
+                className="h-[18px] w-[18px]"
+                strokeWidth={2}
+              />
             </button>
           </header>
 
@@ -152,7 +213,8 @@ export const DirectoryWidget = () => {
             onClick={openDirectory}
             aria-label="Abrir directorio MESA completo"
             className="
-              group/directory relative cursor-pointer block w-full
+              group/directory relative block w-full
+              cursor-pointer
               overflow-hidden
               rounded-[21px]
               border border-slate-200/80
@@ -182,7 +244,7 @@ export const DirectoryWidget = () => {
                 "
               />
 
-              {/* Capa de enfoque */}
+              {/* Capa oscura inferior */}
               <div
                 aria-hidden="true"
                 className="
@@ -234,7 +296,11 @@ export const DirectoryWidget = () => {
                   group-hover/directory:opacity-100
                 "
               >
-                <Maximize2 className="h-3.5 w-3.5" strokeWidth={2} />
+                <Maximize2
+                  className="h-3.5 w-3.5"
+                  strokeWidth={2}
+                />
+
                 Ver directorio completo
               </div>
             </div>
@@ -246,7 +312,7 @@ export const DirectoryWidget = () => {
         isOpen={open}
         title="Directorio MESA"
         image={DIRECTORY_IMAGE}
-        onClose={() => setOpen(false)}
+        onClose={closeDirectory}
       />
     </>
   );
