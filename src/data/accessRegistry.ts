@@ -210,10 +210,10 @@ const internalQuickAccessItems: QuickAccessItem[] = [
         path: "/reportes",
     },
     {
-        id: "capacitaciones",
-        title: "Capacitaciones",
+        id: "capacitacion",
+        title: "Capacitación",
         icon: GraduationCap,
-        path: "/capacitaciones",
+        path: "/capacitacion",
     },
     {
         id: "tickets",
