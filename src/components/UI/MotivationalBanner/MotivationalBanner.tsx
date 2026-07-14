@@ -3,7 +3,7 @@ const MESA_LOGO_WHITE = "/mesa-logo-white.png";
 
 export const MotivationalBanner = () => {
   return (
-    <section className="relative h-[200px] overflow-hidden rounded-2xl bg-gradient-to-r from-[#0033a0] via-[#005bea] to-[#1769ff] px-6 py-5 text-white shadow-sm">
+    <section className="relative h-[180px] overflow-hidden rounded-2xl bg-gradient-to-r from-[#0033a0] via-[#005bea] to-[#1769ff] px-6 py-5 text-white shadow-sm">
       <div className="absolute inset-0 opacity-20">
         <div className="h-full w-full bg-[radial-gradient(circle_at_20%_30%,white_1px,transparent_1px)] [background-size:22px_22px]" />
       </div>

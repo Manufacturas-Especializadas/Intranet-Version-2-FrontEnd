@@ -61,7 +61,7 @@ export const DamesaideaSection = () => {
                   src="/damesaidea.png"
                   alt="DaMESAidea"
                   draggable={false}
-                  className="max-h-[150px] w-auto max-w-full object-contain"
+                  className="max-h-[190px] w-auto max-w-full object-contain"
                 />
               </div>
             </div>

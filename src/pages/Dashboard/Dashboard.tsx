@@ -8,6 +8,7 @@ import { MotivationalBanner } from "../../components/UI/MotivationalBanner/Motiv
 import { NewHiresSection } from "../../components/UI/NewHiresSection/NewHiresSection";
 import { QuickAccess } from "../../components/UI/QuickAccess/QuickAccess";
 import { RecentPosts } from "../../components/UI/RecentPosts/RecentPosts";
+import { SmallReminderCard } from "../../components/UI/SmallReminderCard/SmallReminderCard";
 
 export const Dashboard = () => {
   return (
@@ -72,21 +73,24 @@ export const Dashboard = () => {
 
           <div
             className="
-              grid min-w-0
-              grid-cols-1
-              items-stretch
-              gap-2
-              lg:grid-cols-[minmax(340px,0.75fr)_minmax(0,1.25fr)]
-            "
+    grid min-w-0
+    grid-cols-1
+    items-stretch
+    gap-2
+    lg:grid-cols-[minmax(340px,0.75fr)_minmax(0,1.25fr)]
+  "
           >
             <div className="min-w-0">
               <NewHiresSection />
             </div>
 
-            <div className="min-w-0">
+            <div className="flex min-w-0 flex-col gap-2">
+              <SmallReminderCard />
               <MotivationalBanner />
             </div>
           </div>
+
+
         </main>
 
         <aside
