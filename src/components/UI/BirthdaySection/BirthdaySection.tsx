@@ -5,7 +5,8 @@ import {
   PartyPopper,
   Sparkles,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DocumentViewerModal } from "../DocumentViewerModal/DocumentViewerModal";
 
 type BirthdayPerson = {
@@ -122,7 +123,6 @@ const BirthdayPhoto = ({
         "
       />
 
-      {/* Oscurecimiento inferior */}
       <div
         aria-hidden="true"
         className="
@@ -137,7 +137,6 @@ const BirthdayPhoto = ({
         "
       />
 
-      {/* Resplandor superior */}
       <div
         aria-hidden="true"
         className="
@@ -150,7 +149,6 @@ const BirthdayPhoto = ({
         "
       />
 
-      {/* Brillo animado */}
       <div
         aria-hidden="true"
         className="
@@ -170,7 +168,6 @@ const BirthdayPhoto = ({
         "
       />
 
-      {/* Botón ampliar */}
       <div
         className="
           pointer-events-none absolute
@@ -192,8 +189,6 @@ const BirthdayPhoto = ({
       >
         <Expand className="h-4 w-4" strokeWidth={2.2} />
       </div>
-
-     
     </button>
   );
 };
@@ -204,11 +199,41 @@ export const BirthdaySection = () => {
     image: string;
   } | null>(null);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const birthdaySectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (location.hash !== "#cumpleanos") return;
+
+    const scrollTimer = window.setTimeout(() => {
+      birthdaySectionRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }, 150);
+
+    const clearHashTimer = window.setTimeout(() => {
+      navigate("/", {
+        replace: true,
+        preventScrollReset: true,
+      });
+    }, 950);
+
+    return () => {
+      window.clearTimeout(scrollTimer);
+      window.clearTimeout(clearHashTimer);
+    };
+  }, [location.hash, navigate]);
+
   return (
     <>
       <section
+        ref={birthdaySectionRef}
+        id="cumpleanos"
+        aria-labelledby="birthday-section-title"
         className="
-          group/section relative overflow-hidden
+          group/section relative scroll-mt-28 overflow-hidden
           rounded-[28px]
           border border-blue-100
           bg-white
@@ -219,7 +244,6 @@ export const BirthdaySection = () => {
           hover:shadow-[0_18px_45px_rgba(15,23,42,0.11)]
         "
       >
-        {/* Fondo superior */}
         <div
           aria-hidden="true"
           className="
@@ -232,7 +256,6 @@ export const BirthdaySection = () => {
           "
         />
 
-        {/* Resplandores decorativos */}
         <div
           aria-hidden="true"
           className="
@@ -257,7 +280,6 @@ export const BirthdaySection = () => {
           "
         />
 
-        {/* Patrón sutil */}
         <div
           aria-hidden="true"
           className="
@@ -268,7 +290,6 @@ export const BirthdaySection = () => {
           "
         />
 
-        {/* Globos decorativos */}
         <img
           src="/globos.png"
           alt=""
@@ -288,7 +309,6 @@ export const BirthdaySection = () => {
         />
 
         <div className="relative z-10">
-          {/* Encabezado */}
           <header className="mb-5 flex items-start justify-between gap-4">
             <div className="flex min-w-0 items-start gap-3">
               <div
@@ -318,7 +338,10 @@ export const BirthdaySection = () => {
                     bg-cyan-400
                   "
                 >
-                  <Sparkles className="h-2 w-2 text-white" strokeWidth={3} />
+                  <Sparkles
+                    className="h-2 w-2 text-white"
+                    strokeWidth={3}
+                  />
                 </span>
               </div>
 
@@ -341,6 +364,7 @@ export const BirthdaySection = () => {
                 </div>
 
                 <h2
+                  id="birthday-section-title"
                   className="
                     text-[22px] font-black
                     leading-tight text-[#123f7a]
@@ -370,20 +394,16 @@ export const BirthdaySection = () => {
                 backdrop-blur-md
               "
             >
-              
-
               Hoy
             </div>
           </header>
 
-          {/* Línea decorativa */}
           <div className="mb-5 flex items-center gap-2">
             <div className="h-1 w-12 rounded-full bg-[#0033a0]" />
             <div className="h-1 w-5 rounded-full bg-sky-400" />
             <div className="h-1 w-2 rounded-full bg-blue-200" />
           </div>
 
-          {/* Cumpleañeros */}
           {birthdays.length > 0 ? (
             <div className="space-y-4">
               {birthdays.map((person) => (
@@ -405,7 +425,6 @@ export const BirthdaySection = () => {
                     hover:shadow-[0_18px_38px_rgba(0,51,160,0.13)]
                   "
                 >
-                  {/* Fondo decorativo de tarjeta */}
                   <div
                     aria-hidden="true"
                     className="
@@ -431,7 +450,6 @@ export const BirthdaySection = () => {
                     }}
                   />
 
-                  {/* Datos del colaborador */}
                   <div className="relative mt-4 px-1">
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
@@ -484,12 +502,14 @@ export const BirthdaySection = () => {
                           group-hover/card:text-white
                         "
                       >
-                        <PartyPopper className="h-5 w-5" strokeWidth={2} />
+                        <PartyPopper
+                          className="h-5 w-5"
+                          strokeWidth={2}
+                        />
                       </div>
                     </div>
                   </div>
 
-                  {/* Fecha */}
                   <div
                     className="
                       relative mt-4 flex
