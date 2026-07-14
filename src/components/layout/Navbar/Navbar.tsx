@@ -67,12 +67,10 @@ const searchAliases: Record<string, string> = {
   home: "inicio principal dashboard portada",
   noticias: "noticia avisos comunicados novedades",
   departamento: "departamento área depto información",
-  aplicaciones:
-    "apps sistemas programas herramientas páginas web enlaces",
+  aplicaciones: "apps sistemas programas herramientas páginas web enlaces",
   posteos: "post publicaciones comunidad comentarios",
   calendario: "eventos fechas agenda anual organización",
-  directorio:
-    "contactos teléfonos extensiones correos personal colaboradores",
+  directorio: "contactos teléfonos extensiones correos personal colaboradores",
   cumpleanos: "cumpleaños festejos colaboradores",
   ingresos: "nuevos empleados altas colaboradores",
   accesos: "permisos seguridad usuarios autorizaciones",
@@ -93,49 +91,42 @@ const normalizeText = (value: string) =>
     .trim();
 
 const applicationById = new Map(
-  companyApplications.map((application) => [
-    application.id,
-    application,
-  ]),
+  companyApplications.map((application) => [application.id, application]),
 );
 
-const searchableItems: SearchResult[] = quickAccessRegistry.map(
-  (item) => {
-    const application = applicationById.get(item.id);
+const searchableItems: SearchResult[] = quickAccessRegistry.map((item) => {
+  const application = applicationById.get(item.id);
 
-    const description =
-      application?.description ??
-      sectionDescriptions[item.id] ??
-      "Sección disponible dentro de la intranet MESA";
+  const description =
+    application?.description ??
+    sectionDescriptions[item.id] ??
+    "Sección disponible dentro de la intranet MESA";
 
-    const group = application?.category ?? "Intranet";
+  const group = application?.category ?? "Intranet";
 
-    const searchableText = normalizeText(
-      [
-        item.title,
-        item.id,
-        item.path,
-        description,
-        group,
-        searchAliases[item.id] ?? "",
-        application?.title ?? "",
-        application?.shortTitle ?? "",
-      ].join(" "),
-    );
-
-    return {
-      ...item,
+  const searchableText = normalizeText(
+    [
+      item.title,
+      item.id,
+      item.path,
       description,
       group,
-      searchableText,
-      iconBackground: application?.iconBackground,
-    };
-  },
-);
+      searchAliases[item.id] ?? "",
+      application?.title ?? "",
+      application?.shortTitle ?? "",
+    ].join(" "),
+  );
 
-export const Navbar = ({
-  onMenuClick = () => undefined,
-}: NavbarProps) => {
+  return {
+    ...item,
+    description,
+    group,
+    searchableText,
+    iconBackground: application?.iconBackground,
+  };
+});
+
+export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
   const navigate = useNavigate();
 
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -150,9 +141,7 @@ export const Navbar = ({
   const searchResults = useMemo(() => {
     if (!normalizedQuery) return [];
 
-    const searchTerms = normalizedQuery
-      .split(/\s+/)
-      .filter(Boolean);
+    const searchTerms = normalizedQuery.split(/\s+/).filter(Boolean);
 
     return searchableItems
       .map((item) => {
@@ -174,21 +163,13 @@ export const Navbar = ({
 
         if (normalizedTitle === normalizedQuery) {
           score = 100;
-        } else if (
-          normalizedTitle.startsWith(normalizedQuery)
-        ) {
+        } else if (normalizedTitle.startsWith(normalizedQuery)) {
           score = 85;
-        } else if (
-          normalizedTitle.includes(normalizedQuery)
-        ) {
+        } else if (normalizedTitle.includes(normalizedQuery)) {
           score = 70;
-        } else if (
-          normalizedGroup === normalizedQuery
-        ) {
+        } else if (normalizedGroup === normalizedQuery) {
           score = 60;
-        } else if (
-          normalizedGroup.includes(normalizedQuery)
-        ) {
+        } else if (normalizedGroup.includes(normalizedQuery)) {
           score = 50;
         }
 
@@ -220,9 +201,7 @@ export const Navbar = ({
     const handleClickOutside = (event: MouseEvent) => {
       if (
         searchContainerRef.current &&
-        !searchContainerRef.current.contains(
-          event.target as Node,
-        )
+        !searchContainerRef.current.contains(event.target as Node)
       ) {
         setIsSearchOpen(false);
       }
@@ -231,17 +210,12 @@ export const Navbar = ({
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener(
-        "mousedown",
-        handleClickOutside,
-      );
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   useEffect(() => {
-    const handleSearchShortcut = (
-      event: globalThis.KeyboardEvent,
-    ) => {
+    const handleSearchShortcut = (event: globalThis.KeyboardEvent) => {
       const isSearchShortcut =
         (event.ctrlKey || event.metaKey) &&
         event.key.toLowerCase() === "k";
@@ -261,10 +235,7 @@ export const Navbar = ({
     window.addEventListener("keydown", handleSearchShortcut);
 
     return () => {
-      window.removeEventListener(
-        "keydown",
-        handleSearchShortcut,
-      );
+      window.removeEventListener("keydown", handleSearchShortcut);
     };
   }, [normalizedQuery]);
 
@@ -321,9 +292,7 @@ export const Navbar = ({
       event.preventDefault();
 
       setActiveIndex((currentIndex) =>
-        currentIndex >= searchResults.length - 1
-          ? 0
-          : currentIndex + 1,
+        currentIndex >= searchResults.length - 1 ? 0 : currentIndex + 1,
       );
 
       return;
@@ -333,9 +302,7 @@ export const Navbar = ({
       event.preventDefault();
 
       setActiveIndex((currentIndex) =>
-        currentIndex <= 0
-          ? searchResults.length - 1
-          : currentIndex - 1,
+        currentIndex <= 0 ? searchResults.length - 1 : currentIndex - 1,
       );
 
       return;
@@ -356,6 +323,7 @@ export const Navbar = ({
     <header
       className="
         sticky top-0 z-40
+        w-full
         border-b border-blue-100/80
         bg-white/[0.94]
         shadow-[0_8px_30px_rgba(15,23,42,0.055)]
@@ -423,7 +391,7 @@ export const Navbar = ({
           items-center
           gap-x-2 gap-y-2
           px-3 py-2
-          sm:px-4
+          sm:px-4 sm:py-2.5
           md:gap-x-3
           lg:px-5
           xl:px-6
@@ -625,9 +593,7 @@ export const Navbar = ({
                 value={query}
                 autoComplete="off"
                 aria-label="Buscar en la intranet"
-                aria-expanded={
-                  isSearchOpen && normalizedQuery.length > 0
-                }
+                aria-expanded={isSearchOpen && normalizedQuery.length > 0}
                 aria-controls="navbar-search-results"
                 aria-autocomplete="list"
                 placeholder="Buscar en MESA..."
@@ -642,7 +608,7 @@ export const Navbar = ({
                 }}
                 onKeyDown={handleSearchKeyDown}
                 className="
-                  block h-11 w-full
+                  block h-10 w-full
                   bg-transparent
                   py-2.5 pl-11 pr-12
                   text-[13px] font-medium
@@ -650,6 +616,7 @@ export const Navbar = ({
                   outline-none
                   placeholder:font-normal
                   placeholder:text-slate-400
+                  sm:h-11
                   md:h-12
                   md:pl-12
                   md:pr-20
@@ -758,10 +725,7 @@ export const Navbar = ({
                         shadow-[0_7px_18px_rgba(0,51,160,0.24)]
                       "
                     >
-                      <Sparkles
-                        className="h-4 w-4"
-                        strokeWidth={2}
-                      />
+                      <Sparkles className="h-4 w-4" strokeWidth={2} />
                     </div>
 
                     <div className="min-w-0">
@@ -828,9 +792,7 @@ export const Navbar = ({
                         type="button"
                         role="option"
                         aria-selected={isActive}
-                        onMouseEnter={() =>
-                          setActiveIndex(index)
-                        }
+                        onMouseEnter={() => setActiveIndex(index)}
                         onMouseDown={(event) => {
                           event.preventDefault();
                         }}
@@ -847,16 +809,15 @@ export const Navbar = ({
                           sm:gap-3
                           sm:px-3
                           sm:py-3
-                          ${
-                            isActive
-                              ? `
+                          ${isActive
+                            ? `
                                 bg-gradient-to-r
                                 from-blue-50
                                 via-white
                                 to-sky-50
                                 shadow-[0_7px_20px_rgba(0,51,160,0.07)]
                               `
-                              : "hover:bg-slate-50"
+                            : "hover:bg-slate-50"
                           }
                         `}
                       >
@@ -867,11 +828,7 @@ export const Navbar = ({
                             w-1 rounded-r-full
                             bg-[#0033a0]
                             transition-all duration-200
-                            ${
-                              isActive
-                                ? "opacity-100"
-                                : "opacity-0"
-                            }
+                            ${isActive ? "opacity-100" : "opacity-0"}
                           `}
                         />
 
@@ -884,12 +841,11 @@ export const Navbar = ({
                             transition-all duration-200
                             sm:h-12 sm:w-12
                             sm:rounded-[15px]
-                            ${
-                              item.iconBackground
-                                ? `${item.iconBackground} text-white shadow-md`
-                                : isActive
-                                  ? "bg-[#0033a0] text-white shadow-md"
-                                  : "bg-slate-100 text-slate-500 group-hover/result:bg-blue-100 group-hover/result:text-[#0033a0]"
+                            ${item.iconBackground
+                              ? `${item.iconBackground} text-white shadow-md`
+                              : isActive
+                                ? "bg-[#0033a0] text-white shadow-md"
+                                : "bg-slate-100 text-slate-500 group-hover/result:bg-blue-100 group-hover/result:text-[#0033a0]"
                             }
                           `}
                         >
@@ -992,11 +948,7 @@ export const Navbar = ({
                               lg:flex
                             "
                           >
-                            <CornerDownLeft
-                              className="h-3 w-3"
-                              strokeWidth={2}
-                            />
-
+                            <CornerDownLeft className="h-3 w-3" strokeWidth={2} />
                             Enter
                           </div>
                         )}
@@ -1027,10 +979,7 @@ export const Navbar = ({
                       text-[#0033a0]
                     "
                   >
-                    <Search
-                      className="h-6 w-6"
-                      strokeWidth={2}
-                    />
+                    <Search className="h-6 w-6" strokeWidth={2} />
 
                     <span
                       className="
@@ -1080,12 +1029,14 @@ export const Navbar = ({
 
         <div
           className="
-            relative z-10
-            flex shrink-0
-            items-center gap-1.5
-            sm:gap-2
-            lg:gap-3
-          "
+    relative z-10
+    col-start-3 row-start-1
+    flex shrink-0
+    items-center justify-self-end
+    gap-1.5
+    sm:gap-2
+    lg:gap-3
+  "
         >
           <button
             type="button"
