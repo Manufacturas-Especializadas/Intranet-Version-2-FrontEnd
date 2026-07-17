@@ -5,9 +5,12 @@ import {
   ExternalLink,
   Mail,
   Menu,
+  Moon,
   Search,
   ShieldCheck,
   Sparkles,
+  Sun,
+  UserRound,
   X,
 } from "lucide-react";
 import {
@@ -24,6 +27,7 @@ import {
   registerRecentAccess,
   type QuickAccessItem,
 } from "../../../data/accessRegistry";
+import { useTheme } from "../../../hooks/useTheme";
 
 interface NavbarProps {
   onMenuClick?: () => void;
@@ -128,13 +132,16 @@ const searchableItems: SearchResult[] = quickAccessRegistry.map((item) => {
 
 export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
   const navigate = useNavigate();
+  const { isDark, toggleTheme } = useTheme();
 
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
 
   const [query, setQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const normalizedQuery = normalizeText(query);
 
@@ -204,6 +211,13 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
         !searchContainerRef.current.contains(event.target as Node)
       ) {
         setIsSearchOpen(false);
+      }
+
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsProfileOpen(false);
       }
     };
 
@@ -397,7 +411,7 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
           xl:px-6
         "
       >
-        <div className="flex min-w-0 items-center gap-2">
+        <div className="col-start-1 row-start-1 flex min-w-0 items-center gap-2">
           <button
             type="button"
             onClick={onMenuClick}
@@ -458,49 +472,19 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
             </p>
           </div>
 
-          <div
-            className="
-              hidden shrink-0
-              flex-col
-              xl:flex
-            "
-          >
+          <div className="hidden shrink-0 flex-col xl:flex">
             <div className="mb-1 flex items-center gap-2">
-              <span
-                className="
-                  relative flex h-2.5 w-2.5
-                  items-center justify-center
-                "
-              >
-                <span
-                  className="
-                    absolute h-full w-full
-                    animate-ping rounded-full
-                    bg-emerald-400 opacity-60
-                  "
-                />
-
+              <span className="relative flex h-2.5 w-2.5 items-center justify-center">
+                <span className="absolute h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
                 <span className="relative h-2 w-2 rounded-full bg-emerald-500" />
               </span>
 
-              <p
-                className="
-                  text-[10px] font-extrabold
-                  uppercase tracking-[0.2em]
-                  text-blue-600
-                "
-              >
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-blue-600">
                 Intranet MESA
               </p>
             </div>
 
-            <h1
-              className="
-                text-xl font-black
-                leading-tight text-[#123f7a]
-                2xl:text-2xl
-              "
-            >
+            <h1 className="text-xl font-black leading-tight text-[#123f7a] 2xl:text-2xl">
               ¡Hola, {currentUser.firstName}!
             </h1>
 
@@ -742,14 +726,7 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
                         Búsqueda MESA
                       </p>
 
-                      <p
-                        className="
-                          mt-0.5 hidden
-                          truncate text-[11px]
-                          text-slate-500
-                          sm:block
-                        "
-                      >
+                      <p className="mt-0.5 hidden truncate text-[11px] text-slate-500 sm:block">
                         Secciones, herramientas y aplicaciones
                       </p>
                     </div>
@@ -773,15 +750,7 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
               </div>
 
               {searchResults.length > 0 ? (
-                <div
-                  className="
-                    custom-scrollbar
-                    max-h-[60dvh]
-                    overflow-y-auto
-                    p-2
-                    sm:max-h-[430px]
-                  "
-                >
+                <div className="custom-scrollbar max-h-[60dvh] overflow-y-auto p-2 sm:max-h-[430px]">
                   {searchResults.map((item, index) => {
                     const Icon = item.icon;
                     const isActive = index === activeIndex;
@@ -809,15 +778,16 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
                           sm:gap-3
                           sm:px-3
                           sm:py-3
-                          ${isActive
-                            ? `
+                          ${
+                            isActive
+                              ? `
                                 bg-gradient-to-r
                                 from-blue-50
                                 via-white
                                 to-sky-50
                                 shadow-[0_7px_20px_rgba(0,51,160,0.07)]
                               `
-                            : "hover:bg-slate-50"
+                              : "hover:bg-slate-50"
                           }
                         `}
                       >
@@ -841,11 +811,12 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
                             transition-all duration-200
                             sm:h-12 sm:w-12
                             sm:rounded-[15px]
-                            ${item.iconBackground
-                              ? `${item.iconBackground} text-white shadow-md`
-                              : isActive
-                                ? "bg-[#0033a0] text-white shadow-md"
-                                : "bg-slate-100 text-slate-500 group-hover/result:bg-blue-100 group-hover/result:text-[#0033a0]"
+                            ${
+                              item.iconBackground
+                                ? `${item.iconBackground} text-white shadow-md`
+                                : isActive
+                                  ? "bg-[#0033a0] text-white shadow-md"
+                                  : "bg-slate-100 text-slate-500 group-hover/result:bg-blue-100 group-hover/result:text-[#0033a0]"
                             }
                           `}
                         >
@@ -860,45 +831,26 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
                           />
 
                           <Icon
-                            className="
-                              relative h-[18px] w-[18px]
-                              sm:h-5 sm:w-5
-                            "
+                            className="relative h-[18px] w-[18px] sm:h-5 sm:w-5"
                             strokeWidth={1.9}
                           />
                         </div>
 
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2">
-                            <p
-                              className="
-                                truncate text-[13px]
-                                font-extrabold
-                                text-[#123f7a]
-                                sm:text-sm
-                              "
-                            >
+                            <p className="truncate text-[13px] font-extrabold text-[#123f7a] sm:text-sm">
                               {item.title}
                             </p>
 
                             {item.external && (
                               <ExternalLink
-                                className="
-                                  h-3.5 w-3.5
-                                  shrink-0 text-blue-500
-                                "
+                                className="h-3.5 w-3.5 shrink-0 text-blue-500"
                                 strokeWidth={2}
                               />
                             )}
                           </div>
 
-                          <p
-                            className="
-                              mt-0.5 line-clamp-1
-                              text-[11px] text-slate-500
-                              sm:text-xs
-                            "
-                          >
+                          <p className="mt-0.5 line-clamp-1 text-[11px] text-slate-500 sm:text-xs">
                             {item.description}
                           </p>
 
@@ -919,13 +871,7 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
                               {item.group}
                             </span>
 
-                            <span
-                              className="
-                                hidden text-[9px]
-                                font-medium text-slate-400
-                                md:block
-                              "
-                            >
+                            <span className="hidden text-[9px] font-medium text-slate-400 md:block">
                               {item.external
                                 ? "Página web externa"
                                 : "Sección de la intranet"}
@@ -948,7 +894,10 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
                               lg:flex
                             "
                           >
-                            <CornerDownLeft className="h-3 w-3" strokeWidth={2} />
+                            <CornerDownLeft
+                              className="h-3 w-3"
+                              strokeWidth={2}
+                            />
                             Enter
                           </div>
                         )}
@@ -969,16 +918,7 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
                     sm:py-8
                   "
                 >
-                  <div
-                    className="
-                      relative mb-4
-                      flex h-14 w-14
-                      items-center justify-center
-                      rounded-[18px]
-                      bg-blue-50
-                      text-[#0033a0]
-                    "
-                  >
+                  <div className="relative mb-4 flex h-14 w-14 items-center justify-center rounded-[18px] bg-blue-50 text-[#0033a0]">
                     <Search className="h-6 w-6" strokeWidth={2} />
 
                     <span
@@ -1004,16 +944,7 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
               )}
 
               {searchResults.length > 0 && (
-                <div
-                  className="
-                    hidden items-center
-                    justify-between
-                    border-t border-slate-100
-                    bg-slate-50/80
-                    px-4 py-2.5
-                    sm:flex
-                  "
-                >
+                <div className="hidden items-center justify-between border-t border-slate-100 bg-slate-50/80 px-4 py-2.5 sm:flex">
                   <span className="text-[10px] text-slate-500">
                     Usa ↑ y ↓ para navegar
                   </span>
@@ -1029,14 +960,14 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
 
         <div
           className="
-    relative z-10
-    col-start-3 row-start-1
-    flex shrink-0
-    items-center justify-self-end
-    gap-1.5
-    sm:gap-2
-    lg:gap-3
-  "
+            relative z-10
+            col-start-3 row-start-1
+            flex shrink-0
+            items-center justify-self-end
+            gap-1.5
+            sm:gap-2
+            lg:gap-3
+          "
         >
           <button
             type="button"
@@ -1064,12 +995,7 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
             "
           >
             <Bell
-              className="
-                h-[18px] w-[18px]
-                transition-transform duration-300
-                group-hover/action:rotate-12
-                xl:h-5 xl:w-5
-              "
+              className="h-[18px] w-[18px] transition-transform duration-300 group-hover/action:rotate-12 xl:h-5 xl:w-5"
               strokeWidth={2}
             />
 
@@ -1122,12 +1048,7 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
             "
           >
             <Mail
-              className="
-                h-[18px] w-[18px]
-                transition-transform duration-300
-                group-hover/action:-translate-y-0.5
-                xl:h-5 xl:w-5
-              "
+              className="h-[18px] w-[18px] transition-transform duration-300 group-hover/action:-translate-y-0.5 xl:h-5 xl:w-5"
               strokeWidth={2}
             />
 
@@ -1164,103 +1085,200 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
             "
           />
 
-          <button
-            type="button"
-            className="
-              group/profile
-              flex cursor-pointer
-              items-center gap-2
-              rounded-xl
-              border border-transparent
-              p-1
-              text-left
-              transition-all duration-300
-              hover:border-blue-100
-              hover:bg-blue-50/70
-              hover:shadow-sm
-              focus:outline-none
-              focus-visible:ring-2
-              focus-visible:ring-blue-500
-              sm:rounded-2xl
-              xl:gap-3
-              xl:p-1.5
-              xl:pr-2
-            "
-          >
-            <div className="relative">
-              <div
-                className="
-                  flex h-10 w-10
-                  items-center justify-center
-                  overflow-hidden rounded-xl
-                  bg-gradient-to-br
-                  from-[#0033a0]
-                  via-[#0757bb]
-                  to-[#1685df]
-                  text-white
-                  shadow-[0_8px_20px_rgba(0,51,160,0.22)]
-                  ring-2 ring-blue-100
-                  transition-all duration-300
-                  group-hover/profile:scale-105
-                  group-hover/profile:ring-blue-200
-                  sm:rounded-2xl
-                  xl:h-11 xl:w-11
-                "
-              >
-                <span className="text-sm font-extrabold">
-                  {currentUser.initials}
-                </span>
-              </div>
-
-              <span
-                className="
-                  absolute -bottom-0.5 -right-0.5
-                  h-3.5 w-3.5
-                  rounded-full
-                  border-2 border-white
-                  bg-emerald-500
-                "
-              />
-            </div>
-
-            <div className="hidden min-w-0 2xl:block">
-              <div className="flex items-center gap-1.5">
-                <p
+          <div ref={profileMenuRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setIsProfileOpen((current) => !current)}
+              aria-expanded={isProfileOpen}
+              aria-haspopup="menu"
+              className="
+                group/profile
+                flex cursor-pointer
+                items-center gap-2
+                rounded-xl
+                border border-transparent
+                p-1
+                text-left
+                transition-all duration-300
+                hover:border-blue-100
+                hover:bg-blue-50/70
+                hover:shadow-sm
+                focus:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-blue-500
+                sm:rounded-2xl
+                xl:gap-3
+                xl:p-1.5
+                xl:pr-2
+              "
+            >
+              <div className="relative">
+                <div
                   className="
-                    truncate text-sm
-                    font-extrabold leading-none
-                    text-[#123f7a]
+                    flex h-10 w-10
+                    items-center justify-center
+                    overflow-hidden rounded-xl
+                    bg-gradient-to-br
+                    from-[#0033a0]
+                    via-[#0757bb]
+                    to-[#1685df]
+                    text-white
+                    shadow-[0_8px_20px_rgba(0,51,160,0.22)]
+                    ring-2 ring-blue-100
+                    transition-all duration-300
+                    group-hover/profile:scale-105
+                    group-hover/profile:ring-blue-200
+                    sm:rounded-2xl
+                    xl:h-11 xl:w-11
                   "
                 >
-                  {currentUser.fullName}
-                </p>
+                  <span className="text-sm font-extrabold">
+                    {currentUser.initials}
+                  </span>
+                </div>
 
-                <ShieldCheck
+                <span
                   className="
+                    absolute -bottom-0.5 -right-0.5
                     h-3.5 w-3.5
-                    shrink-0 text-blue-500
+                    rounded-full
+                    border-2 border-white
+                    bg-emerald-500
                   "
-                  strokeWidth={2}
                 />
               </div>
 
-              <p className="mt-1 truncate text-[11px] text-slate-500">
-                {currentUser.department}
-              </p>
-            </div>
+              <div className="hidden min-w-0 2xl:block">
+                <div className="flex items-center gap-1.5">
+                  <p className="truncate text-sm font-extrabold leading-none text-[#123f7a]">
+                    {currentUser.fullName}
+                  </p>
 
-            <ChevronDown
-              className="
-                hidden h-4 w-4
-                shrink-0 text-slate-400
-                transition-transform duration-300
-                group-hover/profile:translate-y-0.5
-                group-hover/profile:text-[#0033a0]
-                2xl:block
-              "
-              strokeWidth={2}
-            />
-          </button>
+                  <ShieldCheck
+                    className="h-3.5 w-3.5 shrink-0 text-blue-500"
+                    strokeWidth={2}
+                  />
+                </div>
+
+                <p className="mt-1 truncate text-[11px] text-slate-500">
+                  {currentUser.department}
+                </p>
+              </div>
+
+              <ChevronDown
+                className={`
+                  hidden h-4 w-4
+                  shrink-0 text-slate-400
+                  transition-transform duration-300
+                  group-hover/profile:text-[#0033a0]
+                  2xl:block
+                  ${isProfileOpen ? "rotate-180 text-[#0033a0]" : ""}
+                `}
+                strokeWidth={2}
+              />
+            </button>
+
+            {isProfileOpen && (
+              <div
+                role="menu"
+                className="
+                  absolute right-0 top-[calc(100%+10px)]
+                  z-50 w-[270px]
+                  overflow-hidden rounded-3xl
+                  border border-blue-100
+                  bg-white
+                  shadow-[0_24px_60px_rgba(15,23,42,0.20)]
+                "
+              >
+                <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-sky-50 p-4">
+                  <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-blue-200/40 blur-2xl" />
+
+                  <div className="relative flex items-center gap-3">
+                    <div
+                      className="
+                        flex h-12 w-12 shrink-0
+                        items-center justify-center
+                        rounded-2xl
+                        bg-gradient-to-br
+                        from-[#0033a0]
+                        via-[#0757bb]
+                        to-[#1685df]
+                        text-white
+                        shadow-[0_10px_22px_rgba(0,51,160,0.24)]
+                      "
+                    >
+                      <span className="text-base font-black">
+                        {currentUser.initials}
+                      </span>
+                    </div>
+
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-black text-[#123f7a]">
+                        {currentUser.fullName}
+                      </p>
+
+                      <p className="mt-0.5 truncate text-xs text-slate-500">
+                        {currentUser.department}
+                      </p>
+
+                      <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                        Activo
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-2">
+                  <button
+                    type="button"
+                    className="
+                      flex w-full items-center gap-3
+                      rounded-2xl px-3 py-2.5
+                      text-left text-sm font-bold
+                      text-slate-600
+                      transition
+                      hover:bg-blue-50
+                      hover:text-[#0033a0]
+                    "
+                  >
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-[#0033a0]">
+                      <UserRound className="h-[18px] w-[18px]" strokeWidth={2} />
+                    </div>
+
+                    Mi perfil
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      toggleTheme();
+                      setIsProfileOpen(false);
+                    }}
+                    className="
+                      flex w-full items-center gap-3
+                      rounded-2xl px-3 py-2.5
+                      text-left text-sm font-bold
+                      text-slate-600
+                      transition
+                      hover:bg-blue-50
+                      hover:text-[#0033a0]
+                    "
+                  >
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-[#0033a0]">
+                      {isDark ? (
+                        <Sun className="h-[18px] w-[18px]" strokeWidth={2} />
+                      ) : (
+                        <Moon className="h-[18px] w-[18px]" strokeWidth={2} />
+                      )}
+                    </div>
+
+                    {isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

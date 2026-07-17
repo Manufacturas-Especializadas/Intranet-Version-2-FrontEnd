@@ -2,6 +2,8 @@
 
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --animate-fade-in: fade-in 0.5s ease-out;
 
@@ -9,8 +11,89 @@
     0% {
       opacity: 0.5;
     }
+
     100% {
       opacity: 1;
     }
   }
+}
+
+html {
+  background: #f8f9fb;
+}
+
+html.dark {
+  background: #020617;
+}
+
+body {
+  margin: 0;
+  background: #f8f9fb;
+  font-family: "Open Sans", sans-serif;
+}
+
+html.dark body {
+  background: #020617;
+}
+
+/* MODO OSCURO GLOBAL */
+html.dark .bg-white,
+html.dark .bg-white\/90,
+html.dark .bg-white\/85,
+html.dark .bg-white\/80,
+html.dark .bg-white\/70,
+html.dark .bg-white\/\[0\.94\] {
+  background-color: rgba(15, 23, 42, 0.94) !important;
+}
+
+html.dark .bg-\[\#F8F9FB\] {
+  background-color: #020617 !important;
+}
+
+html.dark .text-\[\#123f7a\],
+html.dark .text-\[\#0033a0\] {
+  color: #f8fafc !important;
+}
+
+html.dark .text-slate-800,
+html.dark .text-slate-700,
+html.dark .text-slate-600 {
+  color: #e2e8f0 !important;
+}
+
+html.dark .text-slate-500,
+html.dark .text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+html.dark .border-slate-200,
+html.dark .border-blue-100,
+html.dark .border-blue-100\/80 {
+  border-color: rgba(51, 65, 85, 0.9) !important;
+}
+
+html.dark .bg-blue-50,
+html.dark .bg-sky-50,
+html.dark .bg-slate-50 {
+  background-color: rgba(30, 41, 59, 0.9) !important;
+}
+
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: rgba(15, 23, 42, 0.95) !important;
+  color: #e2e8f0 !important;
+  border-color: rgba(51, 65, 85, 0.9) !important;
+}
+
+html.dark input::placeholder {
+  color: #64748b !important;
+}
+
+html.dark table thead {
+  background-color: #0f172a !important;
+}
+
+html.dark table tbody tr:hover {
+  background-color: rgba(30, 41, 59, 0.75) !important;
 }

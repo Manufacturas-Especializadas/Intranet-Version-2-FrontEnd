@@ -1,0 +1,527 @@
+export type SistemasCategoryId =
+  | "accesos"
+  | "servidores"
+  | "equipos"
+  | "impresoras"
+  | "camaras"
+  | "red"
+  | "nas"
+  | "correo"
+  | "licencias"
+  | "telefonia"
+  | "procedimientos"
+  | "proveedores";
+
+export type ColumnType = "text" | "password" | "url" | "date" | "textarea" | "select";
+
+export type ColumnConfig = {
+  key: string;
+  label: string;
+  type?: ColumnType;
+  sensitive?: boolean;
+  width?: string;
+  options?: string[];
+};
+
+export type CategoryConfig = {
+  id: SistemasCategoryId;
+  title: string;
+  description: string;
+  badge: string;
+  columns: ColumnConfig[];
+};
+
+export type SistemasRecord = {
+  id: string;
+  category: SistemasCategoryId;
+  [key: string]: string;
+};
+
+export const categoryConfigs: CategoryConfig[] = [
+  {
+    id: "accesos",
+    title: "Accesos",
+    description: "Usuarios, contraseñas, URLs y accesos administrativos.",
+    badge: "Sensible",
+    columns: [
+      { key: "sistema", label: "Sistema", width: "180px" },
+      { key: "url", label: "URL / Acceso", type: "url", width: "240px" },
+      { key: "usuario", label: "Usuario", width: "180px" },
+      { key: "password", label: "Contraseña", type: "password", sensitive: true, width: "180px" },
+      { key: "mfa", label: "MFA / Método", width: "150px" },
+      { key: "notas", label: "Notas", type: "textarea", width: "300px" },
+    ],
+  },
+  {
+    id: "servidores",
+    title: "Servidores",
+    description: "Servidores físicos, virtuales, consolas y servicios críticos.",
+    badge: "Infraestructura",
+    columns: [
+      { key: "nombre", label: "Servidor", width: "180px" },
+      { key: "ip", label: "IP / Host", width: "150px" },
+      { key: "tipo", label: "Tipo", width: "170px" },
+      { key: "funcion", label: "Función", width: "240px" },
+      { key: "usuario", label: "Usuario", width: "180px" },
+      { key: "password", label: "Contraseña", type: "password", sensitive: true, width: "180px" },
+      { key: "estado", label: "Estado", type: "select", options: ["Operativo", "Revisar", "Fuera de servicio", "Pendiente"], width: "140px" },
+      { key: "notas", label: "Notas", type: "textarea", width: "280px" },
+    ],
+  },
+  {
+    id: "equipos",
+    title: "Equipos",
+    description: "PCs, laptops, AnyDesk, usuarios asignados y estado.",
+    badge: "Activos",
+    columns: [
+      { key: "equipo", label: "Equipo", width: "170px" },
+      { key: "usuarioAsignado", label: "Usuario asignado", width: "180px" },
+      { key: "area", label: "Área", width: "150px" },
+      { key: "ip", label: "IP", width: "130px" },
+      { key: "anydesk", label: "AnyDesk", width: "150px" },
+      { key: "password", label: "Clave / Acceso", type: "password", sensitive: true, width: "170px" },
+      { key: "estado", label: "Estado", type: "select", options: ["Activo", "Resguardo", "Reparación", "Baja"], width: "140px" },
+      { key: "notas", label: "Notas", type: "textarea", width: "260px" },
+    ],
+  },
+  {
+    id: "impresoras",
+    title: "Impresoras",
+    description: "Inventario de impresoras, IPs, modelos y soporte.",
+    badge: "Soporte",
+    columns: [
+      { key: "area", label: "Área", width: "170px" },
+      { key: "modelo", label: "Modelo", width: "210px" },
+      { key: "ip", label: "IP / Cola", width: "160px" },
+      { key: "proveedor", label: "Proveedor", width: "160px" },
+      { key: "soporte", label: "Soporte", width: "190px" },
+      { key: "estado", label: "Estado", type: "select", options: ["Operativa", "Revisar", "Sin tóner", "Fuera de servicio"], width: "150px" },
+      { key: "notas", label: "Notas", type: "textarea", width: "280px" },
+    ],
+  },
+  {
+    id: "camaras",
+    title: "Cámaras / Lectores",
+    description: "DVR, cámaras, lectores, HIKVISION y equipos de monitoreo.",
+    badge: "Seguridad física",
+    columns: [
+      { key: "nombre", label: "Equipo", width: "180px" },
+      { key: "marca", label: "Marca / Sistema", width: "170px" },
+      { key: "ip", label: "IP / Host", width: "160px" },
+      { key: "ubicacion", label: "Ubicación", width: "170px" },
+      { key: "usuario", label: "Usuario", width: "160px" },
+      { key: "password", label: "Contraseña", type: "password", sensitive: true, width: "170px" },
+      { key: "notas", label: "Notas", type: "textarea", width: "280px" },
+    ],
+  },
+  {
+    id: "red",
+    title: "Red / WiFi / VPN",
+    description: "WiFi, VPN, APs, switches, segmentos y enlaces.",
+    badge: "Conectividad",
+    columns: [
+      { key: "servicio", label: "Servicio", width: "170px" },
+      { key: "tipo", label: "Tipo", width: "140px" },
+      { key: "ssidHost", label: "SSID / Host / Gateway", width: "210px" },
+      { key: "usuario", label: "Usuario", width: "160px" },
+      { key: "password", label: "Contraseña", type: "password", sensitive: true, width: "170px" },
+      { key: "puerto", label: "Puerto", width: "100px" },
+      { key: "notas", label: "Notas", type: "textarea", width: "300px" },
+    ],
+  },
+  {
+    id: "nas",
+    title: "NAS / Permisos",
+    description: "NAS, carpetas compartidas, usuarios y permisos.",
+    badge: "Archivos",
+    columns: [
+      { key: "recurso", label: "Recurso", width: "180px" },
+      { key: "ruta", label: "Ruta / IP", width: "220px" },
+      { key: "usuario", label: "Usuario", width: "170px" },
+      { key: "password", label: "Contraseña", type: "password", sensitive: true, width: "170px" },
+      { key: "permisos", label: "Permisos", width: "220px" },
+      { key: "notas", label: "Notas", type: "textarea", width: "300px" },
+    ],
+  },
+  {
+    id: "correo",
+    title: "Correo / M365",
+    description: "Correo, M365, licencias Business Standard y administración.",
+    badge: "Cuentas",
+    columns: [
+      { key: "cuenta", label: "Cuenta", width: "210px" },
+      { key: "plataforma", label: "Plataforma", width: "170px" },
+      { key: "licencia", label: "Licencia / Plan", width: "170px" },
+      { key: "url", label: "URL Admin", type: "url", width: "240px" },
+      { key: "usuario", label: "Usuario admin", width: "180px" },
+      { key: "password", label: "Contraseña", type: "password", sensitive: true, width: "170px" },
+      { key: "estado", label: "Estado", type: "select", options: ["Activa", "Sin licencia", "Baja", "Pendiente"], width: "130px" },
+      { key: "notas", label: "Notas", type: "textarea", width: "260px" },
+    ],
+  },
+  {
+    id: "licencias",
+    title: "Licencias",
+    description: "Software, vencimientos, seriales, proveedores y asignaciones.",
+    badge: "Gestión",
+    columns: [
+      { key: "software", label: "Software", width: "180px" },
+      { key: "tipo", label: "Tipo", width: "160px" },
+      { key: "serial", label: "Serial / Key", type: "password", sensitive: true, width: "210px" },
+      { key: "asignadoA", label: "Asignado a", width: "180px" },
+      { key: "vencimiento", label: "Vencimiento", type: "date", width: "150px" },
+      { key: "proveedor", label: "Proveedor", width: "170px" },
+      { key: "estado", label: "Estado", type: "select", options: ["Vigente", "Por vencer", "Vencida", "Pendiente"], width: "130px" },
+      { key: "notas", label: "Notas", type: "textarea", width: "300px" },
+    ],
+  },
+  {
+    id: "telefonia",
+    title: "Telefonía",
+    description: "Conmutador, extensiones, grupos y configuración.",
+    badge: "Extensiones",
+    columns: [
+      { key: "recurso", label: "Recurso", width: "180px" },
+      { key: "extension", label: "Extensión / Grupo", width: "160px" },
+      { key: "ip", label: "IP / Consola", width: "170px" },
+      { key: "usuario", label: "Usuario", width: "150px" },
+      { key: "password", label: "Contraseña", type: "password", sensitive: true, width: "160px" },
+      { key: "notas", label: "Notas", type: "textarea", width: "300px" },
+    ],
+  },
+  {
+    id: "procedimientos",
+    title: "Procedimientos",
+    description: "Guías técnicas, pasos, rutas, configuraciones y solución de fallas.",
+    badge: "Wiki",
+    columns: [
+      { key: "titulo", label: "Procedimiento", width: "220px" },
+      { key: "sistema", label: "Sistema", width: "170px" },
+      { key: "pasos", label: "Pasos / Resumen", type: "textarea", width: "420px" },
+      { key: "ruta", label: "Ruta / Link", width: "260px" },
+      { key: "responsable", label: "Responsable", width: "160px" },
+      { key: "notas", label: "Notas", type: "textarea", width: "300px" },
+    ],
+  },
+  {
+    id: "proveedores",
+    title: "Proveedores / Soporte",
+    description: "Contactos de soporte, teléfonos, proveedores y ligas de reporte.",
+    badge: "Contactos",
+    columns: [
+      { key: "proveedor", label: "Proveedor", width: "180px" },
+      { key: "servicio", label: "Servicio", width: "190px" },
+      { key: "contacto", label: "Contacto", width: "180px" },
+      { key: "telefono", label: "Teléfono", width: "170px" },
+      { key: "url", label: "URL / Portal", type: "url", width: "260px" },
+      { key: "notas", label: "Notas", type: "textarea", width: "320px" },
+    ],
+  },
+];
+
+export const initialSistemasRecords: SistemasRecord[] = [
+  {
+    id: "acc-cloudnet",
+    category: "accesos",
+    sistema: "CloudNET H3C",
+    url: "https://oasiscloud.h3c.com/",
+    usuario: "ulises.gonzalez@mesa.ms",
+    password: "",
+    mfa: "",
+    notas: "Administración de APs / CloudNET.",
+  },
+  {
+    id: "acc-mail",
+    category: "accesos",
+    sistema: "Mail MESA Admin",
+    url: "https://mail.mesa.ms:901/",
+    usuario: "",
+    password: "",
+    mfa: "",
+    notas: "Administración de correo.",
+  },
+  {
+    id: "acc-bitdefender",
+    category: "accesos",
+    sistema: "Bitdefender GravityZone",
+    url: "https://gravityzone.bitdefender.com/",
+    usuario: "",
+    password: "",
+    mfa: "",
+    notas: "Consola de seguridad endpoint.",
+  },
+
+  {
+    id: "srv-appsrvmesa",
+    category: "servidores",
+    nombre: "APPSRVMESA",
+    ip: "192.168.25.130",
+    tipo: "Servidor",
+    funcion: "Aplicaciones / FUTURE",
+    usuario: "APPSVRMESA\\Administrator",
+    password: "",
+    estado: "Operativo",
+    notas: "",
+  },
+  {
+    id: "srv-epicor-training",
+    category: "servidores",
+    nombre: "EPICOR TRAINING",
+    ip: "192.168.25.84",
+    tipo: "Servidor",
+    funcion: "Ambiente Epicor Training",
+    usuario: "Administrator",
+    password: "",
+    estado: "Operativo",
+    notas: "",
+  },
+  {
+    id: "srv-conpaq",
+    category: "servidores",
+    nombre: "Mesa_ConPAQ",
+    ip: "192.168.25.206",
+    tipo: "Servidor / Citrix",
+    funcion: "MasterWeb / CONTPAQ",
+    usuario: "Administrator",
+    password: "",
+    estado: "Operativo",
+    notas: "Acceso desde Citrix.",
+  },
+  {
+    id: "srv-dominio",
+    category: "servidores",
+    nombre: "Servidor Dominio",
+    ip: "192.168.25.4",
+    tipo: "Active Directory",
+    funcion: "Dominio / usuarios",
+    usuario: "Administrator",
+    password: "",
+    estado: "Operativo",
+    notas: "",
+  },
+  {
+    id: "srv-xencenter",
+    category: "servidores",
+    nombre: "XenCenter",
+    ip: "192.168.25.8",
+    tipo: "Virtualización",
+    funcion: "Administración de VMs",
+    usuario: "root",
+    password: "",
+    estado: "Operativo",
+    notas: "Documentación con APPSVRMESA, Epicor Training, MESA CONTPAQ y SWORKS.",
+  },
+
+  {
+    id: "imp-oficinas",
+    category: "impresoras",
+    area: "Oficinas Generales",
+    modelo: "Ecosys M3145",
+    ip: "192.168.25.200",
+    proveedor: "COMOSA",
+    soporte: "",
+    estado: "Operativa",
+    notas: "",
+  },
+  {
+    id: "imp-aluminio",
+    category: "impresoras",
+    area: "Aluminio",
+    modelo: "Ecosys M2040dn",
+    ip: "192.168.25.216",
+    proveedor: "COMOSA",
+    soporte: "",
+    estado: "Operativa",
+    notas: "",
+  },
+  {
+    id: "imp-laboratorio",
+    category: "impresoras",
+    area: "Laboratorio",
+    modelo: "Ecosys M2040dn",
+    ip: "192.168.25.65",
+    proveedor: "COMOSA",
+    soporte: "",
+    estado: "Operativa",
+    notas: "",
+  },
+  {
+    id: "imp-ingenieria",
+    category: "impresoras",
+    area: "Ingeniería",
+    modelo: "TaskAlfa 3501i",
+    ip: "192.168.25.214",
+    proveedor: "COMOSA",
+    soporte: "",
+    estado: "Operativa",
+    notas: "",
+  },
+
+  {
+    id: "cam-hikvision",
+    category: "camaras",
+    nombre: "Lector SITE / HIKVISION",
+    marca: "HIKVISION",
+    ip: "192.168.22.80",
+    ubicacion: "SITE",
+    usuario: "",
+    password: "",
+    notas: "Acceso desde navegador.",
+  },
+  {
+    id: "cam-dvr-site",
+    category: "camaras",
+    nombre: "DVR Site",
+    marca: "DVR",
+    ip: "192.168.25.170",
+    ubicacion: "SITE",
+    usuario: "",
+    password: "",
+    notas: "",
+  },
+
+  {
+    id: "red-mesacorp",
+    category: "red",
+    servicio: "MesaCorp",
+    tipo: "WiFi",
+    ssidHost: "MesaCorp",
+    usuario: "",
+    password: "",
+    puerto: "",
+    notas: "SSID corporativo.",
+  },
+  {
+    id: "red-opermesa",
+    category: "red",
+    servicio: "OperMesa",
+    tipo: "WiFi",
+    ssidHost: "OperMesa",
+    usuario: "",
+    password: "",
+    puerto: "",
+    notas: "SSID operativo.",
+  },
+  {
+    id: "red-vpn",
+    category: "red",
+    servicio: "VPN MESA",
+    tipo: "FortiClient",
+    ssidHost: "",
+    usuario: "",
+    password: "",
+    puerto: "4443",
+    notas: "Acceso remoto VPN.",
+  },
+
+  {
+    id: "nas-synology",
+    category: "nas",
+    recurso: "NAS Synology",
+    ruta: "192.168.25.54",
+    usuario: "Synadmin",
+    password: "",
+    permisos: "Carpetas compartidas",
+    notas: "Usuarios / permisos de red.",
+  },
+
+  {
+    id: "lic-solidworks",
+    category: "licencias",
+    software: "SolidWorks",
+    tipo: "Licencia servidor",
+    serial: "",
+    asignadoA: "",
+    vencimiento: "",
+    proveedor: "",
+    estado: "Pendiente",
+    notas: "Documentar serial, servidor y puerto.",
+  },
+  {
+    id: "lic-autocad",
+    category: "licencias",
+    software: "Autocad",
+    tipo: "Licencia",
+    serial: "",
+    asignadoA: "",
+    vencimiento: "",
+    proveedor: "Autodesk",
+    estado: "Pendiente",
+    notas: "Documentar administración y servidor de licencia.",
+  },
+  {
+    id: "lic-m365",
+    category: "licencias",
+    software: "Microsoft 365 Business Standard",
+    tipo: "Suscripción",
+    serial: "",
+    asignadoA: "",
+    vencimiento: "",
+    proveedor: "Microsoft",
+    estado: "Pendiente",
+    notas: "Gestionar usuarios con licencia.",
+  },
+
+  {
+    id: "tel-conmutador",
+    category: "telefonia",
+    recurso: "Conmutador",
+    extension: "",
+    ip: "192.168.26.5",
+    usuario: "INSTALLER",
+    password: "",
+    notas: "Web Maintenance Console.",
+  },
+
+  {
+    id: "proc-xencenter",
+    category: "procedimientos",
+    titulo: "Acceso a XenCenter",
+    sistema: "XenCenter",
+    pasos: "Acceder a la consola, abrir XenCenter y administrar VMs documentadas.",
+    ruta: "C:\\Program Files (x86)\\Citrix\\XenCenter\\",
+    responsable: "Sistemas",
+    notas: "",
+  },
+  {
+    id: "proc-solid",
+    category: "procedimientos",
+    titulo: "Instalación SolidWorks",
+    sistema: "SolidWorks",
+    pasos: "Documentar instalación, número de serie, servidor y puerto de licencia.",
+    ruta: "",
+    responsable: "Sistemas",
+    notas: "",
+  },
+  {
+    id: "proc-autocad",
+    category: "procedimientos",
+    titulo: "Cambio de server para Autocad",
+    sistema: "Autocad",
+    pasos: "Modificar archivo Licpath.lic y apuntar al servidor correspondiente.",
+    ruta: "ProgramData\\Autodesk\\CL1\\JGS-001l1",
+    responsable: "Sistemas",
+    notas: "",
+  },
+
+  {
+    id: "prov-comosa",
+    category: "proveedores",
+    proveedor: "COMOSA",
+    servicio: "Impresoras",
+    contacto: "",
+    telefono: "81292727 / 81292828 opción 2",
+    url: "",
+    notas: "Reporte de impresoras.",
+  },
+  {
+    id: "prov-mexis",
+    category: "proveedores",
+    proveedor: "Mexis",
+    servicio: "Correo electrónico",
+    contacto: "Help Desk",
+    telefono: "01-55-50-00-44-00",
+    url: "https://emailsecurity.mexis.mx/admin/",
+    notas: "Reporte correo electrónico.",
+  },
+];
