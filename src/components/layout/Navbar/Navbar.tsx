@@ -573,7 +573,7 @@ export const Navbar = ({ onMenuClick = () => undefined }: NavbarProps) => {
 
               <input
                 ref={searchInputRef}
-                type="search"
+                type="text"
                 value={query}
                 autoComplete="off"
                 aria-label="Buscar en la intranet"
