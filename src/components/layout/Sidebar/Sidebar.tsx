@@ -5,7 +5,6 @@ import Logo from "../../../assets/logomesa.png";
 import {
   ExternalLink,
   GraduationCap,
-  HeadphonesIcon,
   Home,
   LayoutGrid,
   Newspaper,
@@ -26,8 +25,7 @@ interface SidebarProps {
   onClose: () => void;
 }
 
-const TICKETS_URL =
-  "https://orange-sea-091f38210.7.azurestaticapps.net/";
+const TICKETS_URL = "https://orange-sea-091f38210.7.azurestaticapps.net/";
 
 const menuItems: MenuItem[] = [
   {
@@ -62,10 +60,7 @@ const menuItems: MenuItem[] = [
   },
 ];
 
-export const Sidebar = ({
-  isOpen,
-  onClose,
-}: SidebarProps) => {
+export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const location = useLocation();
 
   const isActive = (path: string) => {
@@ -74,8 +69,7 @@ export const Sidebar = ({
     }
 
     return (
-      location.pathname === path ||
-      location.pathname.startsWith(`${path}/`)
+      location.pathname === path || location.pathname.startsWith(`${path}/`)
     );
   };
 
@@ -147,11 +141,7 @@ export const Sidebar = ({
           2xl:w-[248px]
           2xl:min-w-[248px]
 
-          ${
-            isOpen
-              ? "translate-x-0"
-              : "-translate-x-full"
-          }
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
         <div
@@ -736,11 +726,7 @@ export const Sidebar = ({
                 />
 
                 <span className="relative flex items-center gap-2">
-                  <TicketCheck
-                    className="h-4 w-4"
-                    strokeWidth={2.2}
-                  />
-
+                  <TicketCheck className="h-4 w-4" strokeWidth={2.2} />
                   Levantar ticket
                 </span>
 
