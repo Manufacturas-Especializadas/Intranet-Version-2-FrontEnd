@@ -5,7 +5,6 @@ import Logo from "../../../assets/logomesa.png";
 import {
   ExternalLink,
   GraduationCap,
-  HeadphonesIcon,
   Home,
   LayoutGrid,
   Newspaper,
@@ -112,10 +111,9 @@ export const Sidebar = ({
           backdrop-blur-[2px]
           transition-opacity duration-300
           md:hidden
-          ${
-            isOpen
-              ? "pointer-events-auto opacity-100"
-              : "pointer-events-none opacity-0"
+          ${isOpen
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
           }
         `}
       />
@@ -125,7 +123,7 @@ export const Sidebar = ({
         className={`
           fixed inset-y-0 left-0 z-50
           flex h-dvh
-          w-[280px] min-w-[280px]
+          w-70 min-w-70
           flex-col overflow-hidden
           border-r border-blue-100
           bg-white
@@ -136,21 +134,20 @@ export const Sidebar = ({
           md:inset-auto
           md:z-20
           md:h-full
-          md:w-[88px]
-          md:min-w-[88px]
+          md:w-22
+          md:min-w-22
           md:translate-x-0
           md:shadow-[8px_0_35px_rgba(15,23,42,0.05)]
 
-          xl:w-[230px]
-          xl:min-w-[230px]
+          xl:w-57.5
+          xl:min-w-57.5
 
-          2xl:w-[248px]
-          2xl:min-w-[248px]
+          2xl:w-62
+          2xl:min-w-62
 
-          ${
-            isOpen
-              ? "translate-x-0"
-              : "-translate-x-full"
+          ${isOpen
+            ? "translate-x-0"
+            : "-translate-x-full"
           }
         `}
       >
@@ -183,7 +180,7 @@ export const Sidebar = ({
           className="
             pointer-events-none absolute inset-0
             bg-[radial-gradient(circle_at_center,rgba(0,51,160,0.09)_1px,transparent_1px)]
-            [background-size:22px_22px]
+            bg-size-[22px_22px]
             opacity-[0.18]
           "
         />
@@ -194,7 +191,7 @@ export const Sidebar = ({
             pointer-events-none absolute
             bottom-0 right-0 top-0
             w-px
-            bg-gradient-to-b
+            bg-linear-to-b
             from-transparent
             via-blue-300/70
             to-transparent
@@ -231,16 +228,16 @@ export const Sidebar = ({
         <div
           className="
             relative z-10
-            flex min-h-[118px]
+            flex min-h-29.5
             items-center justify-center
             border-b border-blue-100/80
             px-4 py-4
 
-            md:min-h-[100px]
+            md:min-h-25
             md:px-2
             md:py-3
 
-            xl:min-h-[142px]
+            xl:min-h-35.5
             xl:px-4
             xl:py-5
           "
@@ -283,17 +280,17 @@ export const Sidebar = ({
               aria-hidden="true"
               className="
                 pointer-events-none absolute
-                flex h-[100px] w-[100px]
+                flex h-25 w-25
                 items-center justify-center
                 opacity-90
                 transition-transform duration-700
                 group-hover/logo:scale-105
 
-                md:h-[72px]
-                md:w-[72px]
+                md:h-18
+                md:w-18
 
-                xl:h-[122px]
-                xl:w-[122px]
+                xl:h-30.5
+                xl:w-30.5
               "
             >
               <div
@@ -394,14 +391,14 @@ export const Sidebar = ({
             <div
               className="
                 relative flex
-                h-[82px] w-[116px]
+                h-20.5 w-29
                 items-center justify-center
 
-                md:h-[62px]
-                md:w-[72px]
+                md:h-15.5
+                md:w-18
 
-                xl:h-[92px]
-                xl:w-[126px]
+                xl:h-23
+                xl:w-31.5
               "
             >
               <img
@@ -410,7 +407,7 @@ export const Sidebar = ({
                 draggable={false}
                 className="
                   relative z-10
-                  h-[70px] w-auto
+                  h-17.5 w-auto
                   object-contain
                   drop-shadow-[0_8px_12px_rgba(0,51,160,0.18)]
                   transition-all duration-500 ease-out
@@ -418,9 +415,9 @@ export const Sidebar = ({
                   group-hover/logo:scale-110
                   group-hover/logo:drop-shadow-[0_15px_22px_rgba(0,51,160,0.32)]
 
-                  md:h-[48px]
+                  md:h-12
 
-                  xl:h-[80px]
+                  xl:h-20
                 "
               />
             </div>
@@ -457,7 +454,7 @@ export const Sidebar = ({
                 aria-current={active ? "page" : undefined}
                 className={`
                   group/menu relative
-                  flex min-h-[48px]
+                  flex min-h-12
                   w-full cursor-pointer
                   items-center gap-3
                   overflow-hidden
@@ -470,8 +467,8 @@ export const Sidebar = ({
                   focus-visible:ring-blue-500
                   focus-visible:ring-offset-1
 
-                  md:min-h-[52px]
-                  md:w-[60px]
+                  md:min-h-13
+                  md:w-15
                   md:justify-center
                   md:gap-0
                   md:px-2
@@ -481,20 +478,19 @@ export const Sidebar = ({
                   xl:gap-3
                   xl:px-3
 
-                  2xl:min-h-[52px]
+                  2xl:min-h-13
                   2xl:text-[15px]
 
-                  ${
-                    active
-                      ? `
-                          bg-gradient-to-r
+                  ${active
+                    ? `
+                          bg-linear-to-r
                           from-[#0033a0]
                           via-[#0757bb]
                           to-[#0874d1]
                           text-white
                           shadow-[0_10px_24px_rgba(0,51,160,0.22)]
                         `
-                      : `
+                    : `
                           text-slate-600
                           hover:bg-blue-50/80
                           hover:text-[#0033a0]
@@ -523,10 +519,9 @@ export const Sidebar = ({
                     absolute bottom-2 left-0 top-2
                     w-1 rounded-r-full
                     transition-all duration-300
-                    ${
-                      active
-                        ? "bg-cyan-300 opacity-100 shadow-[0_0_12px_rgba(103,232,249,0.8)]"
-                        : "bg-blue-500 opacity-0 group-hover/menu:opacity-100"
+                    ${active
+                      ? "bg-cyan-300 opacity-100 shadow-[0_0_12px_rgba(103,232,249,0.8)]"
+                      : "bg-blue-500 opacity-0 group-hover/menu:opacity-100"
                     }
                   `}
                 />
@@ -538,10 +533,9 @@ export const Sidebar = ({
                     items-center justify-center
                     rounded-xl
                     transition-all duration-300
-                    ${
-                      active
-                        ? "bg-white/15 text-white shadow-inner"
-                        : `
+                    ${active
+                      ? "bg-white/15 text-white shadow-inner"
+                      : `
                             bg-slate-50 text-slate-400
                             group-hover/menu:-rotate-3
                             group-hover/menu:scale-110
@@ -553,7 +547,7 @@ export const Sidebar = ({
                   `}
                 >
                   <Icon
-                    className="h-[18px] w-[18px]"
+                    className="h-4.5 w-4.5"
                     strokeWidth={active ? 2.3 : 2}
                   />
                 </div>
@@ -604,9 +598,9 @@ export const Sidebar = ({
             className="
               group/support relative
               overflow-hidden
-              rounded-[24px]
+              rounded-3xl
               border border-blue-400/20
-              bg-gradient-to-br
+              bg-linear-to-br
               from-[#06183f]
               via-[#0033a0]
               to-[#0874d1]
@@ -626,7 +620,7 @@ export const Sidebar = ({
               className="
                 pointer-events-none absolute inset-0
                 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.17)_1px,transparent_1px)]
-                [background-size:19px_19px]
+                bg-size-[19px_19px]
                 opacity-20
               "
             />
@@ -665,7 +659,7 @@ export const Sidebar = ({
                 -left-1/2 top-0
                 h-full w-1/3
                 -skew-x-12
-                bg-gradient-to-r
+                bg-linear-to-r
                 from-transparent
                 via-white/20
                 to-transparent
@@ -765,10 +759,10 @@ export const Sidebar = ({
             aria-label="Levantar ticket de soporte"
             className="
               group/support-compact
-              hidden h-[58px] w-[60px]
+              hidden h-14.5 w-15
               items-center justify-center
               rounded-2xl
-              bg-gradient-to-br
+              bg-linear-to-br
               from-[#0033a0]
               to-[#1685df]
               text-white
